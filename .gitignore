@@ -1,0 +1,36 @@
+# Binaries
+yiapi.exe
+yiapi
+*.exe~
+*.db
+
+# Logs
+logs/
+*.log
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
+
+# Node
+node_modules/
+
+# Build output
+web/shadcn/dist/
+
+# Old themes
+web/default/node_modules/
+web/berry/node_modules/
+web/air/node_modules/

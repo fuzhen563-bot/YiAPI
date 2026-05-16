@@ -1,0 +1,1 @@
+import{r as o,j as e,x as t}from"./index-0kAyWb4K.js";const p=o.forwardRef(({className:r,...a},s)=>e.jsx("div",{ref:s,className:t("shrink-0 bg-border h-[1px] w-full",r),...a}));p.displayName="Separator";export{p as S};

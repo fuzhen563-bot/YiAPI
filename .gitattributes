@@ -1,0 +1,27 @@
+# Auto detect text files and perform normalization
+* text=auto
+
+# Go source
+*.go text diff=golang
+
+# JavaScript/TypeScript
+*.js text
+*.ts text
+*.tsx text
+*.jsx text
+*.json text
+*.css text
+
+# Shell scripts
+*.sh text eol=lf
+*.bat text eol=crlf
+
+# Images
+*.png binary
+*.jpg binary
+*.svg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary

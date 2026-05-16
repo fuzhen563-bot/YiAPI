@@ -1,198 +1,183 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/songquanpeng/one-api/main/web/default/public/logo.png" width="120" height="120" alt="yiapi logo">
+  <img src="web/default/public/logo.png" width="120" height="120" alt="YiAPI Logo">
 </p>
 
-<div align="center">
-
-# YiAPI
-
-_基于 One API 二次开发的大模型 API 中转管理系统，支持套餐/加量包、在线支付、用户中心_
-
-</div>
+<h1 align="center">YiAPI</h1>
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/songquanpeng/one-api/main/LICENSE">
-    <img src="https://img.shields.io/github/license/songquanpeng/one-api?color=brightgreen" alt="license">
-  </a>
-  <img src="https://img.shields.io/badge/golang-1.22-blue" alt="go">
-  <img src="https://img.shields.io/badge/react-18.2-61dafb" alt="react">
+  <em>大模型 API 中转管理平台 — 基于 One API 二次开发，支持套餐订阅、加量包、在线支付、用户中心</em>
 </p>
 
-## 项目简介
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.22-00ADD8?logo=go" alt="Go">
+  <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react" alt="React">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
 
-YiAPI 是基于 [One API](https://github.com/songquanpeng/one-api) 进行二次开发的大模型 API 中转管理系统。在保留 One API 全部核心能力的基础上，新增了用户中心、套餐系统、在线支付、风控管理等企业级功能。
+---
 
-### 核心能力
-- 支持 30+ 种大模型渠道（OpenAI、Azure、Anthropic、Google、百度、阿里、智谱等）
-- 支持负载均衡、失败自动重试、Stream 模式
-- 支持多机部署、Redis 缓存
+## 概述
 
-### YiAPI 新增功能
+YiAPI 是一个功能完备的大模型 API 中转管理平台，在原 [One API](https://github.com/songquanpeng/one-api) 基础上深度二次开发，新增了完整的用户中心、套餐系统、在线支付、风控管理等企业级功能。
 
-#### 🎯 用户中心
-- **我的概览** — 额度、余额、请求量实时统计，公告通知
-- **套餐中心** — 月/季/年套餐购买订阅，自动续费
-- **加量包** — 独立资源包，先消耗套餐配额，套餐用尽后自动消耗加量包
-- **用量统计** — Token 消耗、Prompt 统计、原价开支、周期内剩余配额
-- **邀请中心** — 邀请码/链接、奖励统计、邀请记录
+### 核心特性
 
-#### 💰 计费系统
-- **消费优先级**：套餐配额 → 加量包 → 账户余额（按序消耗）
-- **在线支付**：集成易支付接口，扫码付款自动到账
-- **兑换码充值**：支持批量生成和导出兑换码
+**多模型支持**
+- 30+ 种大模型渠道：OpenAI、Azure、Anthropic、Google Gemini、百度文心、阿里通义、智谱 ChatGLM、DeepSeek 等
+- 负载均衡、失败自动重试、Stream 模式
 
-#### 🛡️ 风控管理
-- 用户每日配额上限
-- 模型访问白名单
-- IP 白名单限制
-- 额度告警阈值
+**用户中心**
+- 概览看板：额度、余额、请求量实时统计
+- 套餐订阅：月/季/年套餐，先消耗套餐 → 加量包 → 余额
+- 加量包：独立资源包，灵活补充
+- API 密钥管理：模型权限、IP 白名单、预算限制
+- 用量统计：Token 趋势、模型排行、成本分析
+- 邀请中心：返佣奖励、邀请记录
 
-#### 📊 运营管理
-- 渠道管理（批量创建、测试、余额监控）
-- 套餐管理（上下架、定价、周期设置）
-- 兑换码管理（批量生成、导出）
-- 用户管理（分组、角色、封禁）
-- 系统设置（登录注册开关、SMTP、OAuth）
+**管理员后台**
+- 仪表盘：收入、用户增长、渠道健康
+- 用户管理：CRUD、余额调整、角色管理
+- 渠道管理：多供应商、权重配置、健康监控
+- 套餐管理：SKU 定价、上下架
+- 订单管理：充值、套餐、退款
+- 模型管理：倍率配置、权限控制
+- 公告管理、黑名单、IP 白名单、RBAC 权限系统
+
+**计费与支付**
+- 消费优先级：TokenPlan → BoostPack → 余额
+- 在线支付：支付宝、微信、Stripe（易支付集成）
+- 兑换码：批量生成、导出 CSV
+
+---
 
 ## 快速开始
 
-### 直接运行
+### 方式一：直接运行
 
-```shell
-git clone https://github.com/your/yiapi.git
-cd yiapi
-
-# 构建前端
+```bash
+# 1. 构建前端
 cd web/shadcn
 npm install
 npm run build
 cd ../..
 
-# 构建后端
+# 2. 构建后端
 go mod download
 go build -o yiapi.exe
 
-# 运行
-./yiapi.exe --port 3000
+# 3. 运行
+./yiapi.exe
 ```
 
-### Docker 部署
+### 方式二：Docker
 
-```shell
+```bash
 docker build -t yiapi .
-docker run --name yiapi -d --restart always -p 3000:3000 -v ./data:/data yiapi
-```
-
-### Docker Compose
-
-```shell
-docker-compose up -d
+docker run -d --name yiapi -p 3000:3000 -v /data:/data yiapi
 ```
 
 ### 访问
 
-打开 http://localhost:3000 ，使用 `root / 123456` 登录。
+打开 http://localhost:3000
 
-> ⚠️ 首次登录请立即修改默认密码！
+**默认账号：** `root` / `123456`
 
-## 系统截图
+> ⚠️ 首次登录请立即修改默认密码
 
-_TODO: 添加截图_
+---
 
-## 系统架构
+## 技术栈
+
+| 层级 | 技术 |
+|------|------|
+| 后端 | Go 1.22 + Gin + GORM |
+| 数据库 | SQLite（默认）/ MySQL / PostgreSQL |
+| 前端 | React 18 + TypeScript + Vite |
+| UI 框架 | shadcn/ui + Tailwind CSS |
+| 图表 | Recharts |
+| 图标 | Lucide |
+
+---
+
+## 项目结构
 
 ```
-用户层（User Portal）
-    ↓
-API 网关（/v1/* relay）
-    ↓
-渠道池（Channel Pool）
-    ↓
-消费优先级调度（Plan → ResourcePack → Balance）
-    ↓
-计费服务（Token 计量 + 倍率计算）
-    ↓
-风控服务（限流 / 配额 / 白名单）
-    ↓
-运营服务（邀请 / 公告）
+├── main.go                 # 入口，//go:embed 前端静态文件
+├── common/                 # 公共组件（配置、日志、缓存、限流）
+├── controller/             # API 控制器
+├── middleware/             # 中间件（认证、限流、风控）
+├── model/                  # 数据模型与数据库操作
+├── router/                 # 路由注册
+├── relay/                  # API 中继转发与渠道适配
+├── web/
+│   ├── shadcn/            # 前端项目（Vite + React + TypeScript）
+│   └── build/             # 编译后的前端静态文件（Go embed）
+├── .env.example            # 环境变量模板
+└── go.mod
 ```
 
-## 配置说明
+---
 
-### 环境变量
+## 配置
 
-系统从 `.env` 文件或环境变量读取配置：
+系统通过 `.env` 文件或环境变量配置：
 
 | 变量 | 说明 | 默认值 |
 |------|------|--------|
-| `PORT` | 监听端口 | `3000` |
-| `THEME` | 前端主题 | `shadcn` |
-| `SQL_DSN` | MySQL 连接字符串（留空使用 SQLite） | |
-| `LOG_SQL_DSN` | 日志独立数据库 | |
-| `REDIS_CONN_STRING` | Redis 连接串 | |
+| `PORT` | 监听端口 | 3000 |
+| `THEME` | 前端主题 | shadcn |
+| `SQL_DSN` | MySQL 连接串（留空使用 SQLite） | - |
+| `LOG_SQL_DSN` | 日志独立数据库 | - |
+| `REDIS_CONN_STRING` | Redis 连接串 | - |
 | `SESSION_SECRET` | 会话密钥 | 随机生成 |
-| `GLOBAL_API_RATE_LIMIT` | API 限流（3分钟内） | `480` |
-| `GLOBAL_WEB_RATE_LIMIT` | 页面限流（3分钟内） | `240` |
-| `PAYMENT_ENABLED` | 启用在线支付 | `false` |
-| `DIRECT_TOPUP_ENABLED` | 启用直充接口 | `true` |
-| `MEMORY_CACHE_ENABLED` | 启用内存缓存 | `false` |
+| `PAYMENT_ENABLED` | 启用在线支付 | false |
+| `DIRECT_TOPUP_ENABLED` | 启用直充接口 | true |
+| `GLOBAL_API_RATE_LIMIT` | API 限流（3分钟内） | 480 |
 
 完整配置项见 `.env.example`。
+
+---
 
 ## 构建说明
 
 ### 前端
-```shell
+
+```bash
 cd web/shadcn
 npm install
-npm run build       # 构建到 dist/
+npm run build        # 输出到 dist/
 ```
 
 ### 后端
-```shell
+
+```bash
 go build -o yiapi.exe
 ```
 
-前端静态文件通过 `//go:embed` 编译进二进制文件，重新构建前端后需要重新编译后端。
+前端静态文件通过 `//go:embed web/build/*` 编译进 Go 二进制文件，修改前端后需重新编译后端。
 
-## 开发
+---
 
-### 技术栈
-
-| 层 | 技术 |
-|----|------|
-| 后端 | Go 1.22 + Gin + GORM |
-| 数据库 | SQLite（默认）/ MySQL / PostgreSQL |
-| 前端 | React 18 + TypeScript + Vite |
-| UI | shadcn/ui + Tailwind CSS |
-| 图表 | Recharts |
-
-### 目录结构
+## 架构
 
 ```
-├── main.go                 # 入口
-├── common/                 # 公共组件（配置、日志、缓存）
-├── controller/             # API 控制器
-├── middleware/             # 中间件（认证、限流、风控）
-├── model/                  # 数据模型
-├── router/                 # 路由注册
-├── relay/                  # API 中继转发
-├── web/
-│   ├── shadcn/            # 新前端（Vite + shadcn/ui）
-│   ├── default/           # 旧前端（Semantic UI）
-│   ├── berry/             # 旧主题
-│   ├── air/               # 旧主题
-│   └── build/             # 编译后的静态文件
-└── yiapi.db               # SQLite 数据库（自动生成）
+用户层（Web UI + API Key）
+    ↓
+API 网关（/v1/* relay + 路由分发）
+    ↓
+渠道池（Provider 负载均衡 + 故障切换）
+    ↓
+消费优先级调度（TokenPlan → BoostPack → 余额）
+    ↓
+计费服务（Token 计量 + 倍率计算）
+    ↓
+风控服务（限流 / 配额 / 黑名单）
 ```
 
-## 相关项目
-
-- [One API](https://github.com/songquanpeng/one-api) — 上游项目
-- [shadcn-admin](https://github.com/satnaing/shadcn-admin) — 前端模板参考
+---
 
 ## License
 
 本项目基于 [MIT](LICENSE) 协议开源，基于 [One API](https://github.com/songquanpeng/one-api)（MIT 协议）二次开发。
 
-根据 MIT 协议，必须在页面底部保留原始版权信息及指向本项目的链接。
+保留底部署名及指向本项目的链接。
