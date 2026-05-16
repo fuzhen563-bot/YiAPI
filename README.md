@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="web/default/public/logo.png" width="120" height="120" alt="YiAPI Logo">
+  <img src="logo_sm.png" width="120" height="120" alt="YiAPI Logo">
 </p>
 
 <h1 align="center">YiAPI</h1>
